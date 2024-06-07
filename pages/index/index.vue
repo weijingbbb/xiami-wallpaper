@@ -1,11 +1,19 @@
 <template>
 	<view class="homeLayout">
+		<custom-nav-bar></custom-nav-bar>
 		<!-- banner swiper -->
 		<view class="banner">
 			<swiper circular :indicator-dots="true" indicator-active-color="#fff" :autoplay="true" :interval="3000"
 				:duration="1000">
-				<swiper-item class="swiper-item" v-for="item in 3">
-					<image src="../../common/images/banner1.jpg" mode=""></image>
+				<swiper-item class="swiper-item" v-for="item in bannerList" :key="item._id">
+					<navigator v-if="item.target == 'miniProgram'" :url="item.url" class="like" target="miniProgram"
+						:app-id="item.appid">
+						<image :src="item.picurl" mode="aspectFill"></image>
+					</navigator>
+
+					<navigator v-else :url="`/pages/classlist/classlist?${item.url}`" class="like">
+						<image :src="item.picurl" mode="aspectFill"></image>
+					</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -19,10 +27,14 @@
 			<view class="center">
 				<swiper vertical circular autoplay :interval="5000" :duration="500">
 					<swiper-item>
-						<view class="swiper-item">欢迎来到🦐🌾虾米壁纸！</view>
+						<navigator url="/pages/notice/detail">
+							<view class="swiper-item">欢迎来到🦐🌾虾米壁纸！</view>
+						</navigator>
 					</swiper-item>
 					<swiper-item>
-						<view class="swiper-item">挑选你喜欢的壁纸吧😊！</view>
+						<navigator url="/pages/notice/detail">
+							<view class="swiper-item">挑选你喜欢的壁纸吧😊！</view>
+						</navigator>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -44,8 +56,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x>
-					<view class="box" v-for="item in 8" @click="goPreview">
-						<image src="../../common/images/preview_small.webp" mode="aspectFill"></image>
+					<view class="box recommend_box" v-for="item in randomList" :key="item._id" @click="goPreview(item._id)">
+						<image :src="item.smallPicurl" mode="aspectFill"></image>
 					</view>
 				</scroll-view>
 			</view>
@@ -56,12 +68,12 @@
 			<common-title>
 				<template #name>专题精选</template>
 				<template #custom>
-					<navigator url="" class="more">More+</navigator>
+					<navigator url="/pages/classify/classify" open-type="reLaunch" class="more">More+</navigator>
 				</template>
 			</common-title>
 
 			<view class="content">
-				<theme-item v-for="item in 8" :key="item"></theme-item>
+				<theme-item v-for="item in classifyList" :key="item._id" :item="item"></theme-item>
 				<theme-item :isMore="true"></theme-item>
 			</view>
 		</view>
@@ -69,14 +81,63 @@
 </template>
 
 <script setup>
+	import {
+		ref
+	} from 'vue';
+	import {
+		onShareAppMessage,
+		onShareTimeline
+	} from "@dcloudio/uni-app"
+	import {
+		apiGetBanner,
+		apiGetDayRandom,
+		apiGetNotice,
+		apiGetClassify
+	} from "@/api/apis.js"
+
+	const bannerList = ref([]);
+	const randomList = ref([]);
+	const noticeList = ref([]);
+	const classifyList = ref([]);
+
+	const getBanner = async () => {
+		let res = await apiGetBanner();
+		bannerList.value = res.data;
+	}
+
+	const getDayRandom = async () => {
+		let res = await apiGetDayRandom();
+		randomList.value = res.data
+	}
+
+	const getNotice = async () => {
+		let res = await apiGetNotice({
+			select: true
+		});
+		noticeList.value = res.data
+	}
+
+	const getClassify = async () => {
+		let res = await apiGetClassify({
+			select: true
+		});
+		classifyList.value = res.data
+		console.log(res);
+	}
 
 
-const goPreview = ()=>{
-	uni.navigateTo({
-		url:"/pages/preview/preview"
-	})
-}
 
+
+	const goPreview = () => {
+		uni.navigateTo({
+			url: "/pages/preview/preview"
+		})
+	}
+
+	getBanner();
+	getDayRandom();
+	getNotice();
+	getClassify();
 </script>
 
 <style lang="scss" scoped>
@@ -99,6 +160,17 @@ const goPreview = ()=>{
 						height: 100%;
 						border-radius: 10rpx;
 					}
+
+					.like {
+						width: 100%;
+						height: 100%;
+
+						image {
+							width: 100%;
+							height: 100%;
+							border-radius: 10rpx;
+						}
+					}
 				}
 			}
 		}
@@ -120,12 +192,12 @@ const goPreview = ()=>{
 
 				:deep() {
 					.uni-icons {
-						// color:$brand-theme-color !important;
+						color: $brand-theme-color !important;
 					}
 				}
 
 				.text {
-					// color:$brand-theme-color;
+					color: $brand-theme-color;
 					font-weight: 600;
 					font-size: 28rpx;
 				}
@@ -160,13 +232,13 @@ const goPreview = ()=>{
 			padding-top: 50rpx;
 
 			.date {
-				// color:$brand-theme-color;
+				color: $brand-theme-color;
 				display: flex;
 				align-items: center;
 
 				:deep() {
 					.uni-icons {
-						// color:$brand-theme-color !important;
+						color: $brand-theme-color !important;
 					}
 				}
 
@@ -184,7 +256,7 @@ const goPreview = ()=>{
 					white-space: nowrap;
 
 					.box {
-						width: 200rpx;
+						width: 230rpx;
 						height: 430rpx;
 						display: inline-block;
 						margin-right: 15rpx;
@@ -217,7 +289,7 @@ const goPreview = ()=>{
 				padding: 0 30rpx;
 				display: grid;
 				gap: 15rpx;
-				grid-template-columns: repeat(3,1fr);
+				grid-template-columns: repeat(3, 1fr);
 			}
 		}
 	}

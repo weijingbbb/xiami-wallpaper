@@ -8,9 +8,6 @@
 			<view class="address">来自于：山东</view>
 		</view>
 
-
-
-
 		<view class="section">
 			<view class="list">
 				<navigator url="/pages/classlist/classlist" class="row">
@@ -50,8 +47,6 @@
 					<!-- #ifndef MP -->
 					<button @click="clickContact">拨打电话</button>
 					<!-- #endif -->
-
-
 				</view>
 			</view>
 		</view>
@@ -154,7 +149,7 @@
 
 						:deep() {
 							.uni-icons {
-								// color: $brand-theme-color !important;
+								color: $brand-theme-color !important;
 							}
 						}
 
