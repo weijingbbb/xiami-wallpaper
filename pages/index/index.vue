@@ -19,7 +19,7 @@
 		</view>
 
 		<!-- 公告 -->
-		<view class="notice">
+		<!-- <view class="notice">
 			<view class="left">
 				<uni-icons type="sound-filled" size="20" color="#28b389"></uni-icons>
 				<text class="text">公告</text>
@@ -37,11 +37,21 @@
 						</navigator>
 					</swiper-item>
 				</swiper>
+
+				<swiper vertical autoplay interval="5000" duration="300" circular>
+					<swiper-item v-for="(item, index) in noticeList" :key="item._id">
+						<navigator :url="'/pages/notice/detail?id='+item._id">
+							{{
+												index ? '欢迎来到🦐🌾虾米壁纸！' : '感谢咸虾米大佬提供的数据支持！'
+											}}
+						</navigator>
+					</swiper-item>
+				</swiper>
 			</view>
 			<view class="right">
 				<uni-icons type="right" size="16" color="#333"></uni-icons>
 			</view>
-		</view>
+		</view> -->
 
 		<!-- 每日推荐 -->
 		<view class="select">
@@ -56,7 +66,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x>
-					<view class="box recommend_box" v-for="item in randomList" :key="item._id" @click="goPreview(item._id)">
+					<view class="box recommend_box" v-for="item in randomList" :key="item._id"
+						@click="goPreview(item._id)">
 						<image :src="item.smallPicurl" mode="aspectFill"></image>
 					</view>
 				</scroll-view>
@@ -125,7 +136,20 @@
 		console.log(res);
 	}
 
+	//分享给好友
+	onShareAppMessage((e) => {
+		return {
+			title: "虾米壁纸，好看的手机壁纸",
+			path: "/pages/classify/classify"
+		}
+	})
 
+	//分享朋友圈
+	onShareTimeline(() => {
+		return {
+			title: "虾米壁纸，好看的手机壁纸"
+		}
+	})
 
 
 	const goPreview = () => {
@@ -229,7 +253,7 @@
 		}
 
 		.select {
-			padding-top: 50rpx;
+			padding-top: 0rpx;
 
 			.date {
 				color: $brand-theme-color;

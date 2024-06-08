@@ -1,0 +1,1 @@
+import{o as e,c as r,w as s,i as o,g as t}from"./index-V2zPcSSm.js";import{_ as a}from"./_plugin-vue_export-helper.BCo6x5W8.js";const n=a({},[["render",function(a,n){const u=o;return e(),r(u,null,{default:s(()=>[t(" 公告 ")]),_:1})}]]);export{n as default};

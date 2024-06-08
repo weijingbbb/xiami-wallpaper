@@ -94,7 +94,7 @@
   justify-content: center;
 }
 .homeLayout .select.data-v-1cf27b2a {
-  padding-top: 50rpx;
+  padding-top: 0rpx;
 }
 .homeLayout .select .date.data-v-1cf27b2a {
   color: #28B389;

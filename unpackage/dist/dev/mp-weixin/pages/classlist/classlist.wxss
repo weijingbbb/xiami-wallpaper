@@ -26,8 +26,8 @@
 .classlist .content.data-v-bd381383 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5rpx;
-  padding: 5rpx;
+  gap: 10rpx;
+  padding: 10rpx;
 }
 .classlist .content .item.data-v-bd381383 {
   height: 440rpx;
