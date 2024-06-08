@@ -115,7 +115,12 @@
   color: #676767;
   font-size: 26rpx;
 }
+.preview .popHeader .empty_box.data-v-2dad6c07 {
+  width: 50rpx;
+  padding: 6rpx;
+}
 .preview .popHeader .close.data-v-2dad6c07 {
+  width: 50rpx;
   padding: 6rpx;
 }
 .preview .infoPopup.data-v-2dad6c07 {

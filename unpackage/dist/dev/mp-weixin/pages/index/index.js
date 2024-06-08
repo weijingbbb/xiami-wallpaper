@@ -45,6 +45,17 @@ const _sfc_main = {
       classifyList.value = res.data;
       console.log(res);
     };
+    common_vendor.onShareAppMessage((e) => {
+      return {
+        title: "虾米壁纸，好看的手机壁纸",
+        path: "/pages/classify/classify"
+      };
+    });
+    common_vendor.onShareTimeline(() => {
+      return {
+        title: "虾米壁纸，好看的手机壁纸"
+      };
+    });
     const goPreview = () => {
       common_vendor.index.navigateTo({
         url: "/pages/preview/preview"
@@ -71,41 +82,31 @@ const _sfc_main = {
           });
         }),
         b: common_vendor.p({
-          type: "sound-filled",
-          size: "20",
-          color: "#28b389"
-        }),
-        c: common_vendor.p({
-          type: "right",
-          size: "16",
-          color: "#333"
-        }),
-        d: common_vendor.p({
           type: "calendar",
           size: "20",
           color: "#28b389"
         }),
-        e: common_vendor.p({
+        c: common_vendor.p({
           date: Date.now(),
           format: "MM/dd"
         }),
-        f: common_vendor.f(randomList.value, (item, k0, i0) => {
+        d: common_vendor.f(randomList.value, (item, k0, i0) => {
           return {
             a: item.smallPicurl,
             b: item._id,
             c: common_vendor.o(($event) => goPreview(item._id), item._id)
           };
         }),
-        g: common_vendor.f(classifyList.value, (item, k0, i0) => {
+        e: common_vendor.f(classifyList.value, (item, k0, i0) => {
           return {
             a: item._id,
-            b: "1cf27b2a-7-" + i0,
+            b: "1cf27b2a-5-" + i0,
             c: common_vendor.p({
               item
             })
           };
         }),
-        h: common_vendor.p({
+        f: common_vendor.p({
           isMore: true
         })
       };
